@@ -10,15 +10,19 @@ auth = Blueprint('auth', __name__)
 # logs in user if user exists, username and password are correct
 @auth.route('/login', methods = ['GET', 'POST'])
 def login():
+    print('in the login method')
     if request.method == ['POST']:
+        print('method is post')
         username = request.form.get('username')
         password = request.form.get('password')
-
+        print(username)
+        print(password)
         user = User.query.filter_by(username = username).first()
         if user:
             if password == user.password:
                 login_user(user, remember = True)
-                return redirect(url_for('views.home'))
+                flash('login successful')
+                return redirect(url_for('views.home', user=current_user, active_page='login'))
             else:
                 return "Password is incorrect"
         else:

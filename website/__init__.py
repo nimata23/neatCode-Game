@@ -1,14 +1,14 @@
 # import statements
 from venv import create
-from flask import flask
-from flask_aqlalchemy import SQLAlchemy
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 import os
 from os import path
 from flask_login import LoginManager
 from dotenv import load_dotenv
-from werkzeung.security import generate_password_hash
+from werkzeug.security import generate_password_hash
 
-load_dotenv()
+#load_dotenv()
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
@@ -30,14 +30,14 @@ def create_app():
     from .auth import auth
 
     app.register_blueprint(views, url_prefix = '/')
-    app.register_blueprint(views, url_prefix = '/')
+    app.register_blueprint(auth, url_prefix = '/')
 
     # stuff for login manager
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
-    @login_manager.user.loader
+    @login_manager.user_loader
     def load_user(id):
         return User.query.get(int(id))
     
@@ -46,7 +46,7 @@ def create_app():
 
 
 #function that creates the database
-def create_database(app: FLask):
+def create_database(app: Flask):
     #use app context in order to initialize properly
     with app.app_context():
         db.create_all()
@@ -60,9 +60,24 @@ def dummy_populate(app):
     with app.app_context():
         #check if there are users
         from .models import User
-        check = User.query.filter_by(username='nimata23').first()
+        check = User.query.filter_by(username='cleanFreak2023').first()
         if not check:
-            #add dummy data here
+            #create dummy users
+            jonna = User(
+                username = "cleanFreak2023",
+                password = generate_password_hash("Gruiscool1", method='sha256'),
+                highscore = 1000
+            )
+
+            nicole = User(
+                username = 'Minions',
+                password = generate_password_hash('Gruiscool2',method='sha256'),
+                highscore = 0
+            )
+
+            # commit dummy users to the database
+            db.session.add_all([jonna, nicole])
+            db.session.commit()
 
 
 #function to empty the database
