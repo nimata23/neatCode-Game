@@ -1,8 +1,3 @@
-'''
-models.py
-April 2023
-neatCode
-'''
 # imports
 from sqlalchemy.sql import func
 from flask_sqlalchemy import SQLAlchemy
