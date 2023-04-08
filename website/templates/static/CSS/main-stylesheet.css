@@ -29,17 +29,20 @@ body {
 
 /* ------- NavBar -------- */
 .navbar {
-    background-color: black;
+    background-color: #141414;
 }
 .navbar-nav .nav-link {
     color: white; 
 }
 .navbar-nav .nav-link:active {
-    color: #53900F; 
+    color: #1F6521; 
 }  
 .navbar-brand {
     color: #1F6521; 
 } 
+.navbar-nav .active > .nav-link {
+    color: #1F6521;
+}
 
 
 /* ------- main title -------- */
@@ -74,4 +77,8 @@ body {
   object-fit: cover; /* Optional: Crop the image to fit */
 }
 
+/* ------- Footer -------- */
+footer{
+    background-color: black;
+}
 
