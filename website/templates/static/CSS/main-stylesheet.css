@@ -74,7 +74,7 @@ body {
   left: 0;
   width: 100%;
   height: 25%;
-  object-fit: cover; /* Optional: Crop the image to fit */
+  object-fit: cover;
 }
 
 /* ------- Footer -------- */
