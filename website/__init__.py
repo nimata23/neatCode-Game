@@ -86,3 +86,4 @@ def drop_database(app):
         db.session.remove()
         db.drop_all()
     print('Database has been dropped!')
+
