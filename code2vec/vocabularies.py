@@ -3,11 +3,11 @@ from typing import Optional, Dict, Iterable, Set, NamedTuple
 import pickle
 import os
 from enum import Enum
-from config import Config
+from .config import Config
 import tensorflow as tf
 from argparse import Namespace
 
-from common import common
+from .common import common
 
 
 class VocabType(Enum):
