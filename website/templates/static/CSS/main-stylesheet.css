@@ -78,7 +78,15 @@ body {
 }
 
 /* ------- Footer -------- */
-footer{
+footer {
     background-color: black;
-}
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px; /* adjust this value to fit your design */
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding-top: 15px; /* adjust this value to center your text vertically */
+  }
 
