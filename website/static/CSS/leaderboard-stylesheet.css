@@ -1,0 +1,18 @@
+
+/* Main content */
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 58px);
+}
+  
+.container-fluid {
+    padding: 15vh;
+}
+
+h1{
+    color: #1F6521;
+}
+  
