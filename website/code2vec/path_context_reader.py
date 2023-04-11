@@ -1,7 +1,7 @@
 import tensorflow as tf
 from typing import Dict, Tuple, NamedTuple, Union, Optional, Iterable
-from config import Config
-from vocabularies import Code2VecVocabs
+from .config import Config
+from .vocabularies import Code2VecVocabs
 import abc
 from functools import reduce
 from enum import Enum

@@ -5,11 +5,11 @@ from typing import Dict, Optional, List, Iterable
 from collections import Counter
 from functools import partial
 
-from path_context_reader import PathContextReader, ModelInputTensorsFormer, ReaderInputTensors, EstimatorAction
-from common import common
-from vocabularies import VocabType
-from config import Config
-from model_base import Code2VecModelBase, ModelEvaluationResults, ModelPredictionResults
+from .path_context_reader import PathContextReader, ModelInputTensorsFormer, ReaderInputTensors, EstimatorAction
+from .common import common
+from .vocabularies import VocabType
+from .config import Config
+from .model_base import Code2VecModelBase, ModelEvaluationResults, ModelPredictionResults
 
 
 tf.compat.v1.disable_eager_execution()

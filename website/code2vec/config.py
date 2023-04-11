@@ -20,7 +20,10 @@ class Config:
                             help="path to save the tokens embeddings file", metavar="FILE", required=False)
         parser.add_argument("-t2v", "--save_target2v", dest="save_t2v",
                             help="path to save the targets embeddings file", metavar="FILE", required=False)
-        parser.add_argument("-l", "--load", dest="load_path",
+        
+        # adding default to our load path, removed the need for an argument
+        # can edit defualt name with approproate file path to the model
+        parser.add_argument("-l", "--load", dest="load_path", default= "code2vec/models/java14_model/saved_model_iter8.release",
                             help="path to load the model from", metavar="FILE", required=False)
         parser.add_argument('--save_w2v', dest='save_w2v', required=False,
                             help="save word (token) vectors in word2vec format")
@@ -31,7 +34,9 @@ class Config:
         parser.add_argument('--release', action='store_true',
                             help='if specified and loading a trained model, release the loaded model for a lower model '
                                  'size.')
-        parser.add_argument('--predict', action='store_true',
+
+        #sets action store to true by default, will always run predict.                   
+        parser.add_argument('--predict', action='store_true', default =True,
                             help='execute the interactive prediction shell')
         parser.add_argument("-fw", "--framework", dest="dl_framework", choices=['keras', 'tensorflow'],
                             default='tensorflow', help="deep learning framework to use.")
