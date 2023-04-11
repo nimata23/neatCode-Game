@@ -11,16 +11,21 @@ views = Blueprint('views', __name__)
 
 #home page
 @views.route('/', methods=['GET','POST'])
-@login_required
 def home():
 
     return render_template("home.html", user=current_user, active_page='home')
 
+#leaderbaord page
+@views.route('/leaderboard', methods=['GET','POST'])
+def leaderbaord():
 
-@views.route('/', methods=['GET','POST'])
+    return render_template("leaderboard.html", user=current_user, active_page='home')
+
+#game page
+@views.route('/game', methods=['GET','POST'])
 @login_required
 def play_game():
-    #as soon as page loads, load the code2vec model, get the model and config values
+    '''#as soon as page loads, load the code2vec model, get the model and config values
     model, config = code2vec.c2v()
 
     #as default select the first file of the first level
@@ -70,8 +75,8 @@ def play_game():
     
         if the user is out of lives
         elif predict and lives <= 0:
-            flash("no lives left, please click next")
-    return render_template("home.html", user=current_user, code_lines = lines, active_page='home')
+            flash("no lives left, please click next")'''
+    return render_template("game.html") #, user=current_user, code_lines = lines, active_page='home')
 
 def read_file(filename):
     file1 = open(filename, 'r')

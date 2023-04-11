@@ -88,4 +88,8 @@ footer {
     color: #fff;
     text-align: center;
     padding-top: 15px; /* adjust this value to center your text vertically */
-  }
+}
+p{
+    width: 100%;
+}
+

@@ -1,3 +1,4 @@
+
 /* Main content */
 main {
     display: flex;
@@ -8,11 +9,19 @@ main {
 }
   
 .container-fluid {
-    max-width: 500px;
-    margin: 0 auto;
+    padding: 15vh;
 }
 
-/* Sign in button */
-#sign-in-btn{
-    background-color: #1F6521;
+#game{
+    height: calc(100vh - 90px);
 }
+
+textarea{
+    width: 100%;
+    height: 100%;
+}
+
+h1{
+    color: #1F6521;
+}
+  
