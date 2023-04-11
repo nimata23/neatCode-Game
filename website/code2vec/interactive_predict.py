@@ -25,19 +25,13 @@ class InteractivePredictor:
         with open(input_filename, 'r') as file:
             return file.readlines()
 
-    def predict(self):
-        input_filename = 'Input.java'
-        print('Starting interactive prediction...')
-        while True:
-            print(
-                'Modify the file: "%s" and press any key when ready, or "q" / "quit" / "exit" to exit' % input_filename)
-            
-            #modify this later, want the predictions to print to the webpage
-            #want to happen on click
-            user_input = input()
-            if user_input.lower() in self.exit_keywords:
-                print('Exiting...')
-                return
+    def predict(self, filename):
+
+        #takes a the input_file name as a parameter, makes it easier to create a database of files with similar names to use
+        input_filename = filename
+        
+        #print('Starting interactive prediction...')
+        #removed code for user input, we only want to run a prediction on the file
             try:
                 predict_lines, hash_to_string_dict = self.path_extractor.extract_paths(input_filename)
             except ValueError as e:
