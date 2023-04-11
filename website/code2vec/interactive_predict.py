@@ -32,23 +32,22 @@ class InteractivePredictor:
         
         #print('Starting interactive prediction...')
         #removed code for user input, we only want to run a prediction on the file
-            try:
-                predict_lines, hash_to_string_dict = self.path_extractor.extract_paths(input_filename)
-            except ValueError as e:
-                print(e)
-                continue
-            raw_prediction_results = self.model.predict(predict_lines)
-            method_prediction_results = common.parse_prediction_results(
-                raw_prediction_results, hash_to_string_dict,
-                self.model.vocabs.target_vocab.special_words, topk=SHOW_TOP_CONTEXTS)
-            for raw_prediction, method_prediction in zip(raw_prediction_results, method_prediction_results):
-                print('Original name:\t' + method_prediction.original_name)
-                for name_prob_pair in method_prediction.predictions:
-                    print('\t(%f) predicted: %s' % (name_prob_pair['probability'], name_prob_pair['name']))
-                print('Attention:')
-                for attention_obj in method_prediction.attention_paths:
-                    print('%f\tcontext: %s,%s,%s' % (
-                    attention_obj['score'], attention_obj['token1'], attention_obj['path'], attention_obj['token2']))
-                if self.config.EXPORT_CODE_VECTORS:
-                    print('Code vector:')
-                    print(' '.join(map(str, raw_prediction.code_vector)))
+        try:
+            predict_lines, hash_to_string_dict = self.path_extractor.extract_paths(input_filename)
+        except ValueError as e:
+            print(e)
+        raw_prediction_results = self.model.predict(predict_lines)
+        method_prediction_results = common.parse_prediction_results(
+        raw_prediction_results, hash_to_string_dict,
+            self.model.vocabs.target_vocab.special_words, topk=SHOW_TOP_CONTEXTS)
+        for raw_prediction, method_prediction in zip(raw_prediction_results, method_prediction_results):
+            print('Original name:\t' + method_prediction.original_name)
+            for name_prob_pair in method_prediction.predictions:
+                print('\t(%f) predicted: %s' % (name_prob_pair['probability'], name_prob_pair['name']))
+            print('Attention:')
+            for attention_obj in method_prediction.attention_paths:
+                print('%f\tcontext: %s,%s,%s' % (
+                attention_obj['score'], attention_obj['token1'], attention_obj['path'], attention_obj['token2']))
+            if self.config.EXPORT_CODE_VECTORS:
+                print('Code vector:')
+                print(' '.join(map(str, raw_prediction.code_vector)))
