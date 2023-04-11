@@ -14,28 +14,13 @@ def load_model_dynamically(config: Config) -> Code2VecModelBase:
 
 #placed code that run if file is called into a function so it can be
 #imported to other files and run remotely.
+
+#load the model
 def c2v():
     config = Config(set_defaults=True, verify=True, load_from_args=True)
     model = load_model_dynamically(config)
     config.log('Done creating code2vec model')
-    print('did it')
-    if config.is_training:
-        model.train()
-    if config.SAVE_W2V is not None:
-        model.save_word2vec_format(config.SAVE_W2V, VocabType.Token)
-        config.log('Origin word vectors saved in word2vec text format in: %s' % config.SAVE_W2V)
-    if config.SAVE_T2V is not None:
-        model.save_word2vec_format(config.SAVE_T2V, VocabType.Target)
-        config.log('Target word vectors saved in word2vec text format in: %s' % config.SAVE_T2V)
-    if (config.is_testing and not config.is_training) or config.RELEASE:
-        eval_results = model.evaluate()
-        if eval_results is not None:
-            config.log(
-                str(eval_results).replace('topk', 'top{}'.format(config.TOP_K_WORDS_CONSIDERED_DURING_PREDICTION)))
-    if config.PREDICT:
-        predictor = InteractivePredictor(config, model)
-        predictor.predict()
-    model.close_session()
+    return model, config
 
 
 if __name__ == '__main__':
