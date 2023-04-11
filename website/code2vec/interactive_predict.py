@@ -31,6 +31,9 @@ class InteractivePredictor:
         while True:
             print(
                 'Modify the file: "%s" and press any key when ready, or "q" / "quit" / "exit" to exit' % input_filename)
+            
+            #modify this later, want the predictions to print to the webpage
+            #want to happen on click
             user_input = input()
             if user_input.lower() in self.exit_keywords:
                 print('Exiting...')
