@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from . import db
 from flask_login import login_required, current_user
-from code2vec import code2vec, interactive_predict
+from .code2vec import code2vec, interactive_predict
 import random
 
 
@@ -13,8 +13,15 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET','POST'])
 @login_required
 def home():
+
+    return render_template("home.html", user=current_user, active_page='home')
+
+
+@views.route('/', methods=['GET','POST'])
+@login_required
+def play_game():
     #as soon as page loads, load the code2vec model, get the model and config values
-    #model, config = code2vec.c2v()
+    model, config = code2vec.c2v()
 
     #as default select the first file of the first level
     file_base = "website/java_samples/level1/file"
@@ -54,20 +61,17 @@ def home():
             lines = read_file(filename)
 
         #check if you are predicting the method name
-        #elif predict and lives > 0:
-            #if there is prediction, create the predictor and pass in the file you are predicting 
-            #the name of
-            #predictor = InteractivePredictor(config, model)
-            #predictor.predict(filename)
-            #lives_left  = lives_left - 1
+        elif predict and lives > 0:
+            if there is prediction, create the predictor and pass in the file you are predicting 
+            the name of
+            predictor = InteractivePredictor(config, model)
+            predictor.predict(filename)
+            lives_left  = lives_left - 1
     
-        #if the user is out of lives
-        #elif predict and lives <= 0:
-            #print("no lives left, please click next")
-
+        if the user is out of lives
+        elif predict and lives <= 0:
+            flash("no lives left, please click next")
     return render_template("home.html", user=current_user, code_lines = lines, active_page='home')
-
-
 
 def read_file(filename):
     file1 = open(filename, 'r')

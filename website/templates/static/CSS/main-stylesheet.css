@@ -1,0 +1,91 @@
+/*
+Color Palette
+#1F2605
+#1F6521
+#53900F
+#A4A71E
+#D6CE15
+*/
+
+/* Set the height of the page to 100% */
+html, body {
+    height: 100%;
+}
+
+/* body and main atributes */
+body {
+    background-color: #141414;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+}
+.container{
+    margin: 5px;
+    padding: 0%;
+}
+#main{
+    margin: 0%;
+}
+
+
+/* ------- NavBar -------- */
+.navbar {
+    background-color: #141414;
+}
+.navbar-nav .nav-link {
+    color: white; 
+}
+.navbar-nav .nav-link:active {
+    color: #1F6521; 
+}  
+.navbar-brand {
+    color: #1F6521; 
+} 
+.navbar-nav .active > .nav-link {
+    color: #1F6521;
+}
+
+
+/* ------- main title -------- */
+#main-title{
+    color: #1F6521;
+}
+.centered {
+  text-align: center;
+  width: 100%;
+}
+
+
+/* ------- main text -------- */
+#main-text{
+    width: 100%;
+    padding: 10%;
+}
+
+#image-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+}
+
+#image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  object-fit: cover;
+}
+
+/* ------- Footer -------- */
+footer {
+    background-color: black;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px; /* adjust this value to fit your design */
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding-top: 15px; /* adjust this value to center your text vertically */
+  }
