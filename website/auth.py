@@ -3,6 +3,7 @@ from . import db
 from .models import User
 from flask_login import login_required, current_user, login_user, logout_user
 import re
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 auth = Blueprint('auth', __name__)
@@ -10,16 +11,17 @@ auth = Blueprint('auth', __name__)
 # logs in user if user exists, username and password are correct
 @auth.route('/login', methods = ['GET', 'POST'])
 def login():
-    print('in the login method')
-    if request.method == ['POST']:
+    #print('in the login method')
+    if request.method == 'POST':
         print('method is post')
         username = request.form.get('username')
         password = request.form.get('password')
         print(username)
         print(password)
         user = User.query.filter_by(username = username).first()
+        print(user)
         if user:
-            if password == user.password:
+            if check_password_hash(user.password, password):
                 login_user(user, remember = True)
                 flash('login successful')
                 return redirect(url_for('views.home', user=current_user, active_page='login'))
