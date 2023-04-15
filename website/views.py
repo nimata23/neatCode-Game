@@ -23,7 +23,7 @@ def leaderbaord():
 
 #game page
 @views.route('/game', methods=['GET','POST'])
-@login_required
+#@login_required
 def play_game():
     '''#as soon as page loads, load the code2vec model, get the model and config values
     model, config = code2vec.c2v()
