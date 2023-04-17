@@ -23,7 +23,7 @@ class Config:
         
         # adding default to our load path, removed the need for an argument
         # can edit defualt name with approproate file path to the model
-        parser.add_argument("-l", "--load", dest="load_path", default= "website/code2vec/java14_model/saved_model_iter8.release",
+        parser.add_argument("-l", "--load", dest="load_path", default= "website/code2vec/models/java14_model/saved_model_iter8.release",
                             help="path to load the model from", metavar="FILE", required=False)
         parser.add_argument('--save_w2v', dest='save_w2v', required=False,
                             help="save word (token) vectors in word2vec format")

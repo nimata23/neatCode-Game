@@ -23,12 +23,11 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 login_user(user, remember = True)
-                flash('login successful')
-                return redirect(url_for('views.home', user=current_user, active_page='login'))
+                return redirect(url_for('views.game', user=current_user,code=None, active_page='game.html'))
             else:
-                return "Password is incorrect"
+                flash("Password is incorrect")
         else:
-            return "User does not exist"
+            flash("User does not exist")
     
     return render_template("login.html", user=current_user, active_page='login')
 

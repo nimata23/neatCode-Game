@@ -4,6 +4,7 @@ from . import db
 from flask_login import login_required, current_user
 from .code2vec import code2vec, interactive_predict
 import random
+from . import java_samples
 
 
 views = Blueprint('views', __name__)
@@ -23,16 +24,19 @@ def leaderbaord():
 
 #game page
 @views.route('/game', methods=['GET','POST'])
-#@login_required
-def play_game():
-    '''#as soon as page loads, load the code2vec model, get the model and config values
+@login_required
+def game():
+    #as soon as page loads, load the code2vec model, get the model and config values
     model, config = code2vec.c2v()
 
     #as default select the first file of the first level
     file_base = "website/java_samples/level1/file"
     filename = file_base + '1' + ".java"
-    lines = read_file(filename)
+    code_block = read_file(filename)
 
+    #print to test
+    for line in code_block:
+        print(line)
     #3 attempts to answer correctly
     lives_left = 3
 
@@ -67,19 +71,20 @@ def play_game():
 
         #check if you are predicting the method name
         elif predict and lives > 0:
-            if there is prediction, create the predictor and pass in the file you are predicting 
-            the name of
+            #if there is prediction, create the predictor and pass in the file you are predicting 
+            #the name of
             predictor = InteractivePredictor(config, model)
             predictor.predict(filename)
             lives_left  = lives_left - 1
     
-        if the user is out of lives
+        #if the user is out of lives
         elif predict and lives <= 0:
-            flash("no lives left, please click next")'''
-    return render_template("game.html") #, user=current_user, code_lines = lines, active_page='home')
+            flash("no lives left, please click next")
+    return render_template("game.html", user=current_user, code=code_block, active_page='game.html')
 
 def read_file(filename):
     file1 = open(filename, 'r')
-    lines = file1.readlines()
-    return lines
+    data = file1.readlines()
+    file1.close()
+    return data
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>neatCode - sign in</title>
+    <title>neatCode - gameplay</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
@@ -74,13 +74,12 @@
             <!-- CodeFlask -->
             <!-- flask div -->
             <div class="code-editor" id='codeflask'>
-const editorElem = document.getElementById('codeflask');
-const flask = new CodeFlask(editorElem, {language: 'js', lineNumbers: true});
+			
             </div>
             <!-- flaskcode script -->
             <script>
               const editorElem = document.getElementById('codeflask');
-              const flask = new CodeFlask(editorElem, {language: 'js', lineNumbers: true});
+              const flask = new CodeFlask(editorElem, {language: 'js', lineNumbers: true, readonly:true});
             </script>
           </div>
           <div class="col-md-3">
