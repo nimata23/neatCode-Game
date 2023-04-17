@@ -74,10 +74,15 @@
             <!-- CodeFlask -->
             <!-- flask div -->
             <div class="code-editor" id='codeflask'>
-			
+			{% if code_block %}
+			   {% for line in code_block %}
+				 {{line}}
+			   {% endfor %}
+			{% endif %}
             </div>
             <!-- flaskcode script -->
             <script>
+		   import CodeFlask from 'codeflask';
               const editorElem = document.getElementById('codeflask');
               const flask = new CodeFlask(editorElem, {language: 'js', lineNumbers: true, readonly:true});
             </script>
