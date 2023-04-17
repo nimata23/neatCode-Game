@@ -74,11 +74,7 @@
             <!-- CodeFlask -->
             <!-- flask div -->
             <div class="code-editor" id='codeflask'>
-			{% if code_block %}
-			   {% for line in code_block %}
-				 {{line}}
-			   {% endfor %}
-			{% endif %}
+              {{code_block}}
             </div>
             <!-- flaskcode script -->
             <script>
