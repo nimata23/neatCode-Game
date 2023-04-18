@@ -4,7 +4,7 @@ from .models import User
 from flask_login import login_required, current_user, login_user, logout_user
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from .code2vec import code2vec
 
 auth = Blueprint('auth', __name__)
 
@@ -23,7 +23,8 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 login_user(user, remember = True)
-                return redirect(url_for('views.game', user=current_user,code=None, active_page='game.html'))
+                user.current_score = 0
+                return redirect(url_for('views.game', user=current_user,code=None, similarity_score = None,active_page='game.html'))
             else:
                 flash("Password is incorrect")
         else:
