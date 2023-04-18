@@ -80,7 +80,10 @@
             <!-- CodeFlask -->
             <!-- flask div -->
             <div class="code-editor" id='codeflask'>
-              {{code}}
+			{% for line in code %}
+		   	{{line}}
+			<br>
+			{% endfor %}
             </div>
             <!-- flaskcode script -->
             <script>
@@ -90,9 +93,16 @@
             </script>
           </div>
           <div class="col-md-3">
+		<div class="bg-secondary text-white p-3">
+		  <a class="nav-link" style="color:white;" href="#" > Instructions</a>
+		 </div>
+		<br>
+		<form method='POST'>
             <div class="bg-secondary text-white p-3">
-              multiple option section
+             <label for="answer">Your Guess:</label>
+		  <input type="text" class="form-control" id="answer" name="answer" placeholder="Enter here"
             </div>
+		</form>
           </div>
         </div>
       </div>
