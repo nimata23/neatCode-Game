@@ -26,10 +26,8 @@ def leaderbaord():
 @views.route('/game', methods=['GET','POST'])
 @login_required
 def game():
-    #set users session score to 0
-    current_user.current_score = 0
-
-    #as soon as page loads, load the code2vec model, get the model and config values
+    
+    #get the model and config values from login
     model, config = code2vec.c2v()
 
     #load word2vec model using target name vectors
@@ -49,6 +47,9 @@ def game():
     #file max, this is the number of sample file in EACH LEVEL! 
     #it is assumed ALL LEVEL have the SAME number of samples
     file_max = 2
+
+    #similarity score
+    similarity_score = 0.0
 
     #print to test
     for line in code_block:
@@ -117,7 +118,7 @@ def game():
         #if the user is out of lives
         elif predict and lives <= 0:
             flash("no lives left, please click next")
-    return render_template("game.html", user=current_user, code=code_block, similariy = similarity_score, active_page='game.html')
+    return render_template("game.html", user=current_user, code=code_block, similarity = similarity_score, active_page='game.html')
 
 def overwrite(code_block):
     #open the input file that predict uses 
