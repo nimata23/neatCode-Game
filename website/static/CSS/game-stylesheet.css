@@ -19,6 +19,7 @@ main {
     padding: 15vh;
 }
 
+
 #game{
     height: calc(100vh - 200px);
 }
