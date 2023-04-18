@@ -2,11 +2,13 @@ import traceback
 
 from .common import common
 from .extractor import Extractor
+import os.path
+from os import path
 
 SHOW_TOP_CONTEXTS = 10
 MAX_PATH_LENGTH = 8
 MAX_PATH_WIDTH = 2
-JAR_PATH = 'JavaExtractor/JPredict/target/JavaExtractor-0.0.1-SNAPSHOT.jar'
+JAR_PATH = 'website/code2vec/JavaExtractor/JPredict/target/JavaExtractor-0.0.1-SNAPSHOT.jar'
 
 
 class InteractivePredictor:
@@ -25,11 +27,22 @@ class InteractivePredictor:
         with open(input_filename, 'r') as file:
             return file.readlines()
 
-    def predict(self, filename):
-
+    def predict(self):
+        ''' print('test jar file path')
+        if path.exists(JAR_PATH):
+            print('jar exists')
+        else:
+            print('error with jar path')
+        '''
         #takes a the input_file name as a parameter, makes it easier to create a database of files with similar names to use
-        input_filename = filename
-        
+        input_filename = 'website/code2vec/Input.java'
+
+        '''#check the file path
+        if path.exists(input_filename):
+            print('file exists')
+        else:
+            print('error with file path')
+        '''
         #print('Starting interactive prediction...')
         #removed code for user input, we only want to run a prediction on the file
         try:
