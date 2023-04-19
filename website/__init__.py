@@ -7,10 +7,21 @@ from os import path
 from flask_login import LoginManager
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash
+from .code2vec import code2vec, interactive_predict
+from gensim.models import KeyedVectors as word2vec
 
 #load_dotenv()
 db = SQLAlchemy()
 DB_NAME = "database.db"
+
+# initialize and set values for global variables
+#code2vec model
+model, config = code2vec.c2v()
+predictor = interactive_predict.InteractivePredictor(config, model)
+
+#load word2vec model using target name vectors
+vectors_text_path_target = 'website/code2vec/models/java14_model/targets.txt'
+target_model = word2vec.load_word2vec_format(vectors_text_path_target, binary=False)
 
 # creates the app
 def create_app():
@@ -36,6 +47,8 @@ def create_app():
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
+
+
 
     @login_manager.user_loader
     def load_user(id):
@@ -66,13 +79,15 @@ def dummy_populate(app):
             jonna = User(
                 username = "cleanFreak2023",
                 password = generate_password_hash("Gruiscool1", method='sha256'),
-                highscore = 1000
+                highscore = 1000,
+                current_score=0
             )
 
             nicole = User(
                 username = 'Minions',
                 password = generate_password_hash('Gruiscool2',method='sha256'),
-                highscore = 0
+                highscore = 0,
+                current_score=0
             )
 
             # commit dummy users to the database
