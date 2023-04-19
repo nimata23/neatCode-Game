@@ -30,7 +30,7 @@
               <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/game">Play</a>
+              <a class="nav-link" href="{{url_for('views.game',level='level1', fileNum='1')}}">Play</a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="/leaderboard">Leaderboard</a>
@@ -38,6 +38,9 @@
             <li class="nav-item">
               <a class="nav-link" href="#">About</a>
             </li>
+	       <li class="nav-item">
+		   <a class="nav-link" href="levelselect.html">Level-Select</a>
+		 </li>
           </ul>
           <ul class="navbar-nav">
             {% if user.is_authenticated %}

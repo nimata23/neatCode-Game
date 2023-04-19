@@ -19,6 +19,11 @@ main {
     padding: 15vh;
 }
 
+.next {
+    background-color: #04AA6D;
+    color:white;
+}
+
 
 #game{
     height: calc(100vh - 200px);
