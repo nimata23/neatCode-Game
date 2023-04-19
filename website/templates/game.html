@@ -43,7 +43,7 @@
               <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/game">Play</a>
+              <a class="nav-link" href="{{url_for('views.game',level='level1',fileNum='1')}}">Play</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/leaderboard">Leaderboard</a>
@@ -51,6 +51,9 @@
             <li class="nav-item">
               <a class="nav-link" href="#">About</a>
             </li>
+		 <li class="nav-item">
+		   <a class="nav-link" href="/levelselect">Level-Select</a>
+	      </li>
           </ul>
           <ul class="navbar-nav">
             {% if user.is_authenticated %}
@@ -75,6 +78,13 @@
 
       <!-- Main container -->
       <div class="container-fluid">
+	  {% with msg=get_flashed_messages()%}
+             {% if msg %}
+                   {% for m in msg %}
+                      <h4>{{ m }}</h4>
+                   {% endfor %}
+             {% endif %}
+        {% endwith %}
         <div class="row" id="game">
           <div class="col-md-9">
             <!-- CodeFlask -->
@@ -110,13 +120,17 @@
 			 	{{similarity}}
 			</p>
 		</div>
-		<br>
 		<div class="bg-secondary text-green p-3">
 			<p> Current Score:
 			<br>
-			{{current_user.current_score}}
+			{{user.current_score}}
 			</p>
 		</div>
+		{% if next_file != 0 %}
+			<a href="{{url_for('views.game',level=curr_level,fileNum=next_file)}}" class='next'>Next Example &raquo</a>
+		{% else %}
+			<p> This is the last example in this level.</p>
+		{% endif %}
           </div>
         </div>
       </div>
