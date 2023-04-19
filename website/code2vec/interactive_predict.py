@@ -43,6 +43,7 @@ class InteractivePredictor:
         else:
             print('error with file path')
         '''
+        top_names = []
         #print('Starting interactive prediction...')
         #removed code for user input, we only want to run a prediction on the file
         try:
@@ -57,6 +58,7 @@ class InteractivePredictor:
             print('Original name:\t' + method_prediction.original_name)
             for name_prob_pair in method_prediction.predictions:
                 print('\t(%f) predicted: %s' % (name_prob_pair['probability'], name_prob_pair['name']))
+                top_names.append(name_prob_pair)
             print('Attention:')
             for attention_obj in method_prediction.attention_paths:
                 print('%f\tcontext: %s,%s,%s' % (
@@ -64,3 +66,4 @@ class InteractivePredictor:
             if self.config.EXPORT_CODE_VECTORS:
                 print('Code vector:')
                 print(' '.join(map(str, raw_prediction.code_vector)))
+        return top_names
