@@ -30,7 +30,7 @@
               <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/game">Play</a>
+              <a class="nav-link" href="{{url_for('views.game',level='level1',fileNum='1')}}">Play</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/leaderboard">Leaderboard</a>
@@ -38,6 +38,9 @@
             <li class="nav-item">
               <a class="nav-link" href="#">About</a>
             </li>
+		 <li class "nav-item">
+		   <a class="nav-link" href="/levelselect">Level-Select</a>
+		 </li>
           </ul>
           <ul class="navbar-nav">
             {% if user.is_authenticated %}
@@ -65,7 +68,7 @@
         <h1 class="display-4">Improve Your Programming Skills</h1>
         <p class="lead">neatCode is a fun and engaging way to practice programming and improve your skills.</p>
         <hr class="my-4">
-        <a class="btn btn-lg" href="/game" role="button" id="play-btn">Play Now</a>
+        <a class="btn btn-lg" href="{{url_for('views.game', level='level1',fileNum='1')}}" role="button" id="play-btn">Play Now</a>
       </section>
 
       <!-- group of cards -->
