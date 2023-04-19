@@ -27,7 +27,7 @@
               <a class="nav-link" href="home.html">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="game.html">Play</a>
+              <a class="nav-link" href="{{url_for('views.game',level='level1', fileNum='1')}}">Play</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="leaderboard.html">Leaderboard</a>
@@ -35,14 +35,9 @@
             <li class="nav-item">
               <a class="nav-link" href="#">About</a>
             </li>
-          </ul>
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="login.html">Sign In</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " href="signup.html">Sign Up</a>
-            </li>
+		 <li class="nav-item">
+		   <a class="nav-link" href="levelselect.html">Level-Select</a>
+		 </li>
           </ul>
         </div>
       </nav>
@@ -52,18 +47,28 @@
     <main>
       <!-- Main container -->
       <div class="container-fluid">
+	 {% with msg=get_flashed_messages()%}
+             {% if msg %}
+                   {% for m in msg %}
+                      <h4>{{ m }}</h4>
+                   {% endfor %}
+             {% endif %}
+        {% endwith %}
         <h1 class="text-center mb-4">Sign In</h1>
-        <form>
+        <form method='POST'>
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="Enter your username">
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Enter your password">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
           </div>
           <button type="submit" class="btn btn-block" id="sign-in-btn">Sign In</button>
         </form>
+	  <div class='container'>
+		<a class="nav-link" href="{{url_for('auth.signup')}}">No Account? Sign up here!</a>
+	  </div>
     </main>
 
     <!-- footer -->

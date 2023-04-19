@@ -5,7 +5,6 @@ from flask_login import login_required, current_user, login_user, logout_user
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
 auth = Blueprint('auth', __name__)
 
 # logs in user if user exists, username and password are correct
@@ -16,19 +15,19 @@ def login():
         print('method is post')
         username = request.form.get('username')
         password = request.form.get('password')
-        print(username)
+        #print(username)
         print(password)
         user = User.query.filter_by(username = username).first()
-        print(user)
+        #print(user)
         if user:
             if check_password_hash(user.password, password):
                 login_user(user, remember = True)
-                flash('login successful')
-                return redirect(url_for('views.home', user=current_user, active_page='login'))
+                user.current_score = 0
+                return redirect(url_for('views.game', level='level1', fileNum=1))
             else:
-                return "Password is incorrect"
+                flash("Password is incorrect")
         else:
-            return "User does not exist"
+            flash("User does not exist")
     
     return render_template("login.html", user=current_user, active_page='login')
 
@@ -50,6 +49,11 @@ def signup():
         username = request.form.get('username')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
+
+        #print block for testing
+        print('username: ' + username)
+        print('password1: ' + password1)
+        print('password2: ' + password2)
 
         #search for username
         user = User.query.filter_by(username=username).first()
@@ -73,12 +77,13 @@ def signup():
         elif not re.search('[0-9]', password1) and not regexp.search(password):
             return 'Password must contain at least 1 number or special character'
         else: # if all tests pass then create the user
-            new_user = User(username=username, password=password1)
+            new_user = User(username=username, password=generate_password_hash(password1),highscore=0, current_score=0)
             db.session.add(new_user)
             db.session.commit()
-            return redirect(url_for('views.home'))
+            print('User Created!')
+            return redirect(url_for('auth.login'))
     
-    return render_template('signup.html', user-current_user, active_page = 'signup')
+    return render_template('signup.html', user=current_user, active_page = 'signup')
 
 
 
