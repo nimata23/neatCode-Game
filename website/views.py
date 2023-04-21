@@ -10,7 +10,8 @@ import re
 
 
 views = Blueprint('views', __name__)
-
+lives_left = 3
+best_score = 0
 
 #home page
 @views.route('/', methods=['GET','POST'])
@@ -28,12 +29,14 @@ def leaderbaord():
 @views.route('/game/<level><fileNum>', methods=['GET','POST'])
 @login_required
 def game(level, fileNum):
-    global predictor
+    global predictor, lives_left, best_score
     
+    current_score = current_user.current_score
 
-    #as default select the first file of the first level
+    #as default select the first file of the chosen level"
     base_path = "website/code2vec/java_samples/" + level + '/file'
     filename = base_path + str(fileNum) +'.java'
+    print(os.path.exists(filename))
     code_block = read_file(filename)
 
     #file max, this is the number of sample file in EACH LEVEL! 
@@ -42,23 +45,31 @@ def game(level, fileNum):
 
     #similarity score
     sim_score = 0.0
-    best_score = 0.0
 
     #print to test
     for line in code_block:
         print(line)
-    #3 attempts to answer correctly [ADD THIS FUNCTIONALITY LATER]
-    lives_left = 3
+    
+
+    #see if there is a next file, change value accordingly
+    if int(fileNum) < file_max:
+        next_file = str(int(fileNum) + 1)
+    else:
+        next_file = '0'
+
+
 
     if request.method == 'POST':
         #print('lives left: ' + str(lives_left))
         predict = request.form.get('answer')
         print('predict value: ' + predict)
         
+            
         if lives_left >=1:
             #if there is prediction, create the predictor and pass in the file you are predicting 
             #the name of
             print("calling predict")
+
             #overwrite the input file
             overwrite(code_block)
 
@@ -67,38 +78,36 @@ def game(level, fileNum):
 
             #tokenize the method name pass by the user
             if len(top_names)> 0:
+                
                 try:
                     tokens = tokenize(predict)
+                    tokens = format(tokens)
                     similarity_score = test_similarity(top_names, tokens)
-                    
                 except:
                     flash('We do not recognize some of the words in your answer.')
                     similarity_score = "0"
                 
                 sim_score = re.sub(r"[\([{})\]]", "", similarity_score)
-                
 
                 if float(sim_score) > best_score:
                     best_score = float(sim_score)
 
             if lives_left == 1:
-                points = int(best_score * 100.0)
+                if best_score < 0:
+                    points = 0
+                else:
+                    points = int(best_score * 100.0)
                 current_user.current_score = current_score + points
-            else:
-                lives_left = lives_left-1
-                print('lives_left: ' + str(lives_left))
-        else:
-            flash('You are out of lives, please move to the next example.')
-
-
-        
-    if int(fileNum) <= file_max:
-        next_file = str(int(fileNum) + 1)
-    else:
-        next_file = '0'
+                db.session.commit()
+            lives_left = lives_left - 1     
                 
+        else:
+            flash('you are out of lives, please move to the next example.')
+            lives_left = 3
+    
+
     return render_template("game.html", user=current_user, code=code_block, similarity = sim_score,
-        curr_level=level, next_file=next_file, lives = lives_left,active_page='game.html')
+        curr_level=level, next_file=str(next_file), lives = lives_left,active_page='game.html')
     
 
 @views.route('/levelselect',  methods=['GET','POST'])
@@ -139,19 +148,31 @@ def read_file(filepath):
 
 
 def test_similarity(top_names, tokens):
-    #get the top answer from code2vec
-    top_pair = top_names[0]
     global target_model
 
-    #most similar based on the tokens from the name passed in by the user
-    from_user = target_model.most_similar(positive=tokens)
-    user_top = from_user[0]
-    print('from user: ')
-    print(from_user)
-    similarity = str(target_model.similarity(top_pair['name'], user_top[0]))
+    #get the top answer from code2vec
+    top_pair = top_names[0]
+    top_pair = format(top_pair['name'])
+    
+    similarity = str(target_model.similarity(top_pair, tokens))
+    
     return similarity
 
 def tokenize(predict):
     predict = predict.lower()
-    tokens = predict.split('_')
+    tokens = predict.split('_')             
     return tokens
+
+
+#formats with '|' between words, needed for code2vec similarity
+def format(tokens):
+    method_name = ''
+
+    for i in range(len(tokens)):
+        if i == (len(tokens) - 1):
+            method_name = method_name + tokens[i]
+        else:
+            method_name = method_name + tokens[i] + '|'
+
+    return method_name
+

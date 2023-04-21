@@ -125,12 +125,12 @@
 			<br>
 			{{user.current_score}}
 			</p>
-		</div>
-		{% if next_file != 0 %}
+		   {% if next_file != '0' %}
 			<a href="{{url_for('views.game',level=curr_level,fileNum=next_file)}}" class='next'>Next Example &raquo</a>
-		{% else %}
+		   {% else %}
 			<p> This is the last example in this level.</p>
-		{% endif %}
+		   {% endif %}
+		</div>
           </div>
         </div>
       </div>

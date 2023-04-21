@@ -23,6 +23,7 @@ def login():
             if check_password_hash(user.password, password):
                 login_user(user, remember = True)
                 user.current_score = 0
+                db.session.commit()
                 return redirect(url_for('views.game', level='level1', fileNum=1))
             else:
                 flash("Password is incorrect")
