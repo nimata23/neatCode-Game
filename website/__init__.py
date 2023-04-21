@@ -10,7 +10,7 @@ from werkzeug.security import generate_password_hash
 from .code2vec import code2vec, interactive_predict
 from gensim.models import KeyedVectors as word2vec
 
-#load_dotenv()
+load_dotenv()
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
@@ -27,13 +27,15 @@ target_model = word2vec.load_word2vec_format(vectors_text_path_target, binary=Fa
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'secret-key-goes-here'
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("postgres", "postgressql", 1)
+    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+    #app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
     db.init_app(app)
 
     #creates the databases
     from .models import User
 
-    create_database(app)
+    #create_database(app)
     dummy_populate(app)
 
     # register blueprints for other pages (views and authentication)
