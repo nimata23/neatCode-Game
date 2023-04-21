@@ -148,7 +148,7 @@ def read_file(filepath):
 
 
 def test_similarity(top_names, tokens):
-    global target_model, token_model
+    global target_model
 
     #get the top answer from code2vec
     top_pair = top_names[0]
